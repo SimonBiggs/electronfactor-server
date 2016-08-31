@@ -1,20 +1,5 @@
-# This file may be used to create an environment using:
-# $ conda create --name <env> --file <this file>
-# platform: linux-64
-geos=3.5.0=0
-libgfortran=3.0.0=1
-mkl=11.3.3=0
-numpy=1.11.1=py35_0
-openssl=1.0.2h=1
-pip=8.1.2=py35_0
-python=3.5.2=0
-readline=6.2=2
-scipy=0.18.0=np111py35_0
-setuptools=25.1.6=py35_0
-shapely=1.5.16=py35_0
-sqlite=3.13.0=0
-tk=8.5.18=0
-tornado=4.4.1=py35_0
-wheel=0.29.0=py35_0
-xz=5.2.2=0
-zlib=1.2.8=3
+nomkl
+numpy=1.11.1
+scipy=0.18.0
+shapely=1.5.16
+tornado=4.4.1

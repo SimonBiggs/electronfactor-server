@@ -13,6 +13,7 @@
 
 """Electron insert REST API tornado server."""
 
+import os
 
 import numpy as np
 import json
@@ -24,6 +25,21 @@ import tornado.web
 
 from electroninserts import (
     parameterise_insert_with_visual_alignment, create_transformed_mesh)
+
+
+class Root(tornado.web.RequestHandler):
+    """Dummy class."""
+
+    def get(self):
+        """Dummy class."""
+        # origin = self.request.headers['Origin']
+        # allow_origins = np.array([
+        #     'http://localhost:8080', 'http://localhost:3000',
+        #     'http://localhost:8889', 'http://electrons.simonbiggs.net'])
+        # if np.any(origin == allow_origins):
+        #     self.set_header('Access-Control-Allow-Origin', origin)
+
+        self.render("index.html")
 
 
 class Parameterise(tornado.web.RequestHandler):
@@ -86,9 +102,21 @@ class Model(tornado.web.RequestHandler):
         self.write(respond)
 
 
-app = tornado.web.Application([
-    ('/parameterise', Parameterise),
-    ('/model', Model)
-])
-app.listen(8888)
-tornado.ioloop.IOLoop.current().start()
+def main():
+    app = tornado.web.Application([
+            ('/', Root),
+            ('/parameterise', Parameterise),
+            ('/model', Model)],
+        template_path=os.path.join(os.path.dirname(__file__), "templates")
+    )
+
+    port = int(os.environ.get("PORT", 5000))
+
+    app.listen(port)
+    tornado.ioloop.IOLoop.current().start()
+
+
+if __name__ == "__main__":
+    main()
+
+
