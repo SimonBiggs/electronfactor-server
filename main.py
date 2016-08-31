@@ -91,12 +91,13 @@ class Model(tornado.web.RequestHandler):
         length = np.array(coordinates['length']).astype(float)
         factor = np.array(coordinates['factor']).astype(float)
 
-        x, y, z = create_transformed_mesh(width, length, factor)
+        mesh_width, mesh_length, mesh_factor = create_transformed_mesh(
+            width, length, factor)
 
         respond = {
-            'x': np.round(x, decimals=1).tolist(),
-            'y': np.round(y, decimals=1).tolist(),
-            'z': np.round(z, decimals=4).tolist()
+            'mesh_width': np.round(mesh_width, decimals=1).tolist(),
+            'mesh_length': np.round(mesh_length, decimals=1).tolist(),
+            'mesh_factor': np.round(mesh_factor, decimals=4).tolist()
         }
 
         self.write(respond)
@@ -118,5 +119,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
