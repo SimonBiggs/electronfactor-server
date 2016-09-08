@@ -47,12 +47,12 @@ class Parameterise(tornado.web.RequestHandler):
 
     def post(self):
         """REST API for parametering inserts."""
-        # origin = self.request.headers['Origin']
-        # allow_origins = np.array([
-        #     'http://localhost:8080', 'http://localhost:3000',
-        #     'http://localhost:8889', 'http://electrons.simonbiggs.net'])
-        # if np.any(origin == allow_origins):
-        #     self.set_header('Access-Control-Allow-Origin', origin)
+        origin = self.request.headers['Origin']
+        allow_origins = np.array([
+            'http://localhost:8080', 'http://localhost:3000',
+            'http://localhost:8889', 'http://electrons.simonbiggs.net'])
+        if np.any(origin == allow_origins):
+            self.set_header('Access-Control-Allow-Origin', origin)
 
         coordinates = json.loads(self.get_argument('body'))
         x = coordinates['x']
@@ -79,12 +79,12 @@ class Model(tornado.web.RequestHandler):
 
     def post(self):
         """REST API for modelling inserts."""
-        # origin = self.request.headers['Origin']
-        # allow_origins = np.array([
-        #     'http://localhost:8080', 'http://localhost:3000',
-        #     'http://localhost:8889', 'http://electrons.simonbiggs.net'])
-        # if np.any(origin == allow_origins):
-        #     self.set_header('Access-Control-Allow-Origin', origin)
+        origin = self.request.headers['Origin']
+        allow_origins = np.array([
+            'http://localhost:8080', 'http://localhost:3000',
+            'http://localhost:8889', 'http://electrons.simonbiggs.net'])
+        if np.any(origin == allow_origins):
+            self.set_header('Access-Control-Allow-Origin', origin)
 
         coordinates = json.loads(self.get_argument('body'))
         width = np.array(coordinates['width']).astype(float)
