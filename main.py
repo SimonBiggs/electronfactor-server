@@ -28,35 +28,29 @@ from electroninserts import (
 
 
 class Root(tornado.web.RequestHandler):
-    """Dummy class."""
+    """Documentation."""
 
     def get(self):
-        """Dummy class."""
-        # origin = self.request.headers['Origin']
-        # allow_origins = np.array([
-        #     'http://localhost:8080', 'http://localhost:3000',
-        #     'http://localhost:8889', 'http://electrons.simonbiggs.net'])
-        # if np.any(origin == allow_origins):
-        #     self.set_header('Access-Control-Allow-Origin', origin)
+        """Documentation."""
 
         self.render("index.html")
 
 
 class Parameterise(tornado.web.RequestHandler):
     """REST API for parametering inserts."""
+    
+
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header('Access-Control-Allow-Methods', 'POST')
+        
 
     def post(self):
         """REST API for parametering inserts."""
-        origin = self.request.headers['Origin']
-        allow_origins = np.array([
-            'http://localhost:8080', 'http://localhost:3000',
-            'http://localhost:8889', 'http://electrons.simonbiggs.net'])
-        if np.any(origin == allow_origins):
-            self.set_header('Access-Control-Allow-Origin', origin)
-
-        coordinates = json.loads(self.get_argument('body'))
-        x = coordinates['x']
-        y = coordinates['y']
+        
+        received = json.loads(self.request.body.decode())
+        x = received['x']
+        y = received['y']
 
         (
             width, length, circle_centre, x_shift, y_shift, rotation_angle
@@ -70,26 +64,26 @@ class Parameterise(tornado.web.RequestHandler):
             'y_shift': np.round(y_shift, decimals=2),
             'rotation_angle': np.round(rotation_angle, decimals=4)
         }
-
+        
         self.write(respond)
-
+        
 
 class Model(tornado.web.RequestHandler):
     """REST API for modelling inserts."""
+    
+    
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header('Access-Control-Allow-Methods', 'POST')
+        
 
     def post(self):
         """REST API for modelling inserts."""
-        origin = self.request.headers['Origin']
-        allow_origins = np.array([
-            'http://localhost:8080', 'http://localhost:3000',
-            'http://localhost:8889', 'http://electrons.simonbiggs.net'])
-        if np.any(origin == allow_origins):
-            self.set_header('Access-Control-Allow-Origin', origin)
 
-        coordinates = json.loads(self.get_argument('body'))
-        width = np.array(coordinates['width']).astype(float)
-        length = np.array(coordinates['length']).astype(float)
-        factor = np.array(coordinates['factor']).astype(float)
+        received = json.loads(self.request.body.decode())
+        width = np.array(received['width']).astype(float)
+        length = np.array(received['length']).astype(float)
+        factor = np.array(received['factor']).astype(float)
 
         mesh_width, mesh_length, mesh_factor = create_transformed_mesh(
             width, length, factor)
