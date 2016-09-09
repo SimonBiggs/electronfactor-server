@@ -101,11 +101,25 @@ class Model(tornado.web.RequestHandler):
         self.write(respond)
 
 
+class WakeUp(tornado.web.RequestHandler):
+    """Dummy GET call to wake up the server."""
+    
+    def set_default_headers(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header('Access-Control-Allow-Methods', 'GET')
+        
+    def get(self):
+        """Documentation."""
+
+        self.write("I'm awake, I'm awake. ... can I have a coffee?")
+
+
 def main():
     app = tornado.web.Application([
             ('/', Root),
             ('/parameterise', Parameterise),
-            ('/model', Model)],
+            ('/model', Model),
+            ('/wakeup', WakeUp)],
         template_path=os.path.join(os.path.dirname(__file__), "templates")
     )
 
