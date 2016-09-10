@@ -60,13 +60,47 @@ class Parameterise(tornado.web.RequestHandler):
             width, length, circle_centre, x_shift, y_shift, rotation_angle
         ) = parameterise_insert_with_visual_alignment(x, y)
 
+        t = np.linspace(0, 2 * np.pi)
+        circle = {
+            "x": np.round(
+                width / 2 * np.sin(t) + circle_centre[0],
+                decimals=2
+            ).tolist(),
+            "y": np.round(
+                width / 2 * np.cos(t) + circle_centre[1],
+                decimals=2
+            ).tolist()
+        }
+
+        rotation_matrix = np.array([
+                [np.cos(rotation_angle), -np.sin(rotation_angle)],
+                [np.sin(rotation_angle), np.cos(rotation_angle)]
+            ])
+
+        ellipse = np.array([
+                length / 2 * np.sin(t),
+                width / 2 * np.cos(t)
+            ]).T
+
+        rotated_ellipse = ellipse @ rotation_matrix
+
+        translated_ellipse = rotated_ellipse + np.array([y_shift, x_shift])
+        ellipse = {
+            "x": np.round(
+                translated_ellipse[:,1],
+                decimals=2
+            ).tolist(),
+            "y": np.round(
+                translated_ellipse[:,0],
+                decimals=2
+            ).tolist()
+        }
+
         respond = {
             'width': np.round(width, decimals=2),
             'length': np.round(length, decimals=2),
-            'circle_centre': np.round(circle_centre, decimals=2).tolist(),
-            'x_shift': np.round(x_shift, decimals=2),
-            'y_shift': np.round(y_shift, decimals=2),
-            'rotation_angle': np.round(rotation_angle, decimals=4)
+            'circle': circle,
+            'ellipse': ellipse
         }
         
         self.write(respond)
