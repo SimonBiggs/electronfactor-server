@@ -247,7 +247,7 @@ def shapely_insert(x, y):
     return geo.Polygon(np.transpose((x, y)))
 
 
-def search_for_centre_of_largest_bounded_circle(x, y):
+def search_for_centre_of_largest_bounded_circle(x, y, callback=None):
     """Find the centre of the largest bounded circle within the insert."""
     insert = shapely_insert(x, y)
     boundary = insert.boundary
@@ -278,7 +278,7 @@ def search_for_centre_of_largest_bounded_circle(x, y):
     niter_success = 50
     output = basinhopping(
         minimising_function, x0, niter=niter, T=T, stepsize=stepsize,
-        niter_success=niter_success)
+        niter_success=niter_success, callback=callback)
 
     circle_centre = output.x
 
@@ -306,16 +306,17 @@ def calculate_length(x, y, width):
     return length
 
 
-def parameterise_insert(x, y):
+def parameterise_insert(x, y, callback=None):
     """Return the parameterisation of an insert given x and y coords."""
-    circle_centre = search_for_centre_of_largest_bounded_circle(x, y)
+    circle_centre = search_for_centre_of_largest_bounded_circle(
+        x, y, callback=callback)
     width = calculate_width(x, y, circle_centre)
     length = calculate_length(x, y, width)
 
     return width, length, circle_centre
 
 
-def visual_alignment_of_equivalent_ellipse(x, y, width, length):
+def visual_alignment_of_equivalent_ellipse(x, y, width, length, callback):
     """Visually align the equivalent ellipse to the insert."""
     insert = shapely_insert(x, y)
     unit_circle = geo.Point(0, 0).buffer(1)
@@ -337,24 +338,30 @@ def visual_alignment_of_equivalent_ellipse(x, y, width, length):
 
     x0 = np.append(
         np.squeeze(insert.centroid.coords), np.pi/4)
-    niter = 100
+    niter = 10
     T = insert.area / 4
     stepsize = 3
-    niter_success = 3
+    niter_success = 2
     output = basinhopping(
         minimising_function, x0, niter=niter, T=T, stepsize=stepsize,
-        niter_success=niter_success)
+        niter_success=niter_success, callback=callback)
 
     x_shift, y_shift, rotation_angle = output.x
 
     return x_shift, y_shift, rotation_angle
 
 
-def parameterise_insert_with_visual_alignment(x, y):
+def parameterise_insert_with_visual_alignment(
+        x, y, circle_callback=None, 
+        visual_ellipse_callback=None,
+        complete_parameterisation_callback=None):
     """Return an equivalent ellipse with visual alignment parameters."""
-    width, length, circle_centre = parameterise_insert(x, y)
+    width, length, circle_centre = parameterise_insert(
+        x, y, callback=circle_callback)
+    if complete_parameterisation_callback is not(None):
+        complete_parameterisation_callback(width, length, circle_centre)
     x_shift, y_shift, rotation_angle = visual_alignment_of_equivalent_ellipse(
-        x, y, width, length)
+        x, y, width, length, callback=visual_ellipse_callback)
 
     return width, length, circle_centre, x_shift, y_shift, rotation_angle
 
