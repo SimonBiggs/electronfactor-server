@@ -266,10 +266,7 @@ def search_for_centre_of_largest_bounded_circle(x, y, callback=None):
         else:
             edge_distance = -point.distance(boundary)
 
-        centroid_weighting = (
-            point.distance(centroid) / (furthest_distance*10))
-
-        return centroid_weighting - edge_distance
+        return -edge_distance
 
     x0 = np.squeeze(centroid.coords)
     niter = 200
