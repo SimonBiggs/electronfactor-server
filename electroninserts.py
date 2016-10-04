@@ -267,7 +267,7 @@ def search_for_centre_of_largest_bounded_circle(x, y, callback=None):
             edge_distance = -point.distance(boundary)
 
         centroid_weighting = (
-            point.distance(centroid) / furthest_distance)
+            point.distance(centroid) / (furthest_distance*10))
 
         return centroid_weighting - edge_distance
 
