@@ -108,10 +108,10 @@ class Parameterise(tornado.web.RequestHandler):
                      
             
             def circle_callback(circle_centre, f, accept):
-                current_results_storage[key]["circle_centre"] = circle_centre
                 width = calculate_width(x, y, circle_centre)
                 length = calculate_length(x, y, width)
                 
+                current_results_storage[key]["circle_centre"] = circle_centre
                 current_results_storage[key]["width"] = width
                 current_results_storage[key]["length"] = length
                 # future_storage[key].set_result(current_results_storage[key])
