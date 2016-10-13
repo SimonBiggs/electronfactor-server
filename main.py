@@ -108,12 +108,13 @@ class Parameterise(tornado.web.RequestHandler):
                      
             
             def circle_callback(circle_centre, f, accept):
-                current_results_storage[key]["circle_centre"] = circle_centre
-                width = calculate_width(x, y, circle_centre)
-                length = calculate_length(x, y, width)
-                
-                current_results_storage[key]["width"] = width
-                current_results_storage[key]["length"] = length
+                if accept:
+                    width = calculate_width(x, y, circle_centre)
+                    length = calculate_length(x, y, width)
+                    
+                    current_results_storage[key]["circle_centre"] = circle_centre
+                    current_results_storage[key]["width"] = width
+                    current_results_storage[key]["length"] = length
                 # future_storage[key].set_result(current_results_storage[key])
                 
                 
@@ -125,11 +126,12 @@ class Parameterise(tornado.web.RequestHandler):
                 
                 
             def visual_ellipse_callback(visuals, f, accept):
-                x_shift, y_shift, rotation_angle = visuals
-                current_results_storage[key]["x_shift"] = x_shift
-                current_results_storage[key]["y_shift"] = y_shift
-                current_results_storage[key]["rotation_angle"] = rotation_angle
-                # future_storage[key].set_result(current_results_storage[key])
+                if accept:
+                    x_shift, y_shift, rotation_angle = visuals
+                    current_results_storage[key]["x_shift"] = x_shift
+                    current_results_storage[key]["y_shift"] = y_shift
+                    current_results_storage[key]["rotation_angle"] = rotation_angle
+                    # future_storage[key].set_result(current_results_storage[key])
                 
             
             process_storage[key] = Process(
