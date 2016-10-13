@@ -242,13 +242,16 @@ class Model(tornado.web.RequestHandler):
         length = np.array(received['length']).astype(float)
         factor = np.array(received['factor']).astype(float)
 
-        mesh_width, mesh_length, mesh_factor = create_transformed_mesh(
+        model_width, model_length, model_factor = create_transformed_mesh(
             width, length, factor)
+            
+        model_factor = np.round(model_factor, decimals=4)                       
+        model_factor = np.where(np.isnan(model_factor), None, model_factor)
 
         respond = {
-            'mesh_width': np.round(mesh_width, decimals=1).tolist(),
-            'mesh_length': np.round(mesh_length, decimals=1).tolist(),
-            'mesh_factor': np.round(mesh_factor, decimals=4).tolist()
+            'model_width': np.round(model_width, decimals=1).tolist(),
+            'model_length': np.round(model_length, decimals=1).tolist(),
+            'model_factor': model_factor.tolist()
         }
 
         self.write(respond)
