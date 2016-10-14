@@ -33,7 +33,7 @@ To set up this heroku app first follow the instructions over at https://github.c
 
 
 ## Copyright information
-Copyright &#169; 2015  Simon Biggs
+Copyright &#169; 2015 - 2016  Simon Biggs
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published
