@@ -6,7 +6,7 @@ The online web app is available at http://electrons.simonbiggs.net
 
 This online web app is for the modelling of the portion of the electron output factor that is dependent on the shape of the shielding insert mounted within the applicator. This allows modelling insert factors using only the measured factors already available at a centre. Should all outliers be removed from the data set the user might expect as low as 0.5% standard uncertainty for factor prediction with as little as 8 data points.
 
-The source code for web app is found in two parts:
+The source code for this web app is found in two parts:
 
  * Server -- https://github.com/SimonBiggs/electronfactor-server
  * Client -- https://github.com/SimonBiggs/electroninserts-webapp
@@ -24,7 +24,7 @@ If you have any issues or feedback please contact me at mail@simonbiggs.net.
 Any use of the code accepts the AGPL3+ license which includes no warranty that this code is fit for a particular purpose. Attempts have been made to make the code transparent and it is recommended that an experienced python programmer and physicist who understands the procedure outlined in the paper and the requirements of your centre identifies whether or not this method and code is fit for your use.
 
 
-## Direct use of the api
+## Direct use of the API
 
 To directly use the server REST api see the example at http://electronapi.simonbiggs.net/.
 
