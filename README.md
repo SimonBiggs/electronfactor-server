@@ -1,6 +1,6 @@
 # Electron Inserts Server
 
-The online web app is avialable at http://electrons.simonbiggs.net
+The online web app is available at http://electrons.simonbiggs.net
 
 ## Description
 
