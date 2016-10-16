@@ -244,6 +244,21 @@ class Model(tornado.web.RequestHandler):
         length = np.array(received['length']).astype(float)
         factor = np.array(received['factor']).astype(float)
 
+        width_valid = np.invert(np.isnan(width))
+        width = width[width_valid]
+        length = length[width_valid]
+        factor = factor[width_valid]
+        
+        length_valid = np.invert(np.isnan(length)) & (length >= width)
+        width = width[length_valid]
+        length = length[length_valid]
+        factor = factor[length_valid]
+        
+        factor_valid = np.invert(np.isnan(factor))
+        width = width[factor_valid]
+        length = length[factor_valid]
+        factor = factor[factor_valid]
+
         model_width, model_length, model_factor = create_transformed_mesh(
             width, length, factor)
             
