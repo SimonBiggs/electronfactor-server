@@ -249,7 +249,7 @@ class Model(tornado.web.RequestHandler):
         length = length[width_valid]
         factor = factor[width_valid]
         
-        length_valid = np.invert(np.isnan(length)) & (length >= width)
+        length_valid = np.invert(np.isnan(length))
         width = width[length_valid]
         length = length[length_valid]
         factor = factor[length_valid]
