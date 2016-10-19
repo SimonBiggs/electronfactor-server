@@ -44,20 +44,29 @@ def run_parameterisation(current_results, x, y,
                          circle_callback=None,
                          visual_ellipse_callback=None,
                          complete_parameterisation_callback=None):
-    (
-        width, length, circle_centre, x_shift, y_shift, rotation_angle
-    ) = parameterise_insert_with_visual_alignment(
-        x, y, circle_callback=circle_callback, 
-        visual_ellipse_callback=visual_ellipse_callback,
-        complete_parameterisation_callback=complete_parameterisation_callback)
-
-    current_results["width"] = width
-    current_results["length"] = length
-    current_results["circle_centre"] = circle_centre
-    current_results["x_shift"] = x_shift
-    current_results["y_shift"] = y_shift
-    current_results["rotation_angle"] = rotation_angle
-    current_results["complete"] = True
+    try:
+        (
+            width, length, circle_centre, x_shift, y_shift, rotation_angle
+        ) = parameterise_insert_with_visual_alignment(
+            x, y, circle_callback=circle_callback, 
+            visual_ellipse_callback=visual_ellipse_callback,
+            complete_parameterisation_callback=complete_parameterisation_callback)
+    except:
+        current_results["width"] = None
+        current_results["length"] = None
+        current_results["circle_centre"] = None
+        current_results["x_shift"] = None
+        current_results["y_shift"] = None
+        current_results["rotation_angle"] = None
+        current_results["complete"] = True
+    else:
+        current_results["width"] = width
+        current_results["length"] = length
+        current_results["circle_centre"] = circle_centre
+        current_results["x_shift"] = x_shift
+        current_results["y_shift"] = y_shift
+        current_results["rotation_angle"] = rotation_angle
+        current_results["complete"] = True
     
     # future_storage[key].set_result(current_results_storage[key])
    
