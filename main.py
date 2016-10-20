@@ -221,6 +221,12 @@ class Parameterise(tornado.web.RequestHandler):
         }
         
         self.write(respond)
+        
+        
+    def get(self):
+        """Documentation."""
+  
+        self.redirect("/")
 
 
 class Root(tornado.web.RequestHandler):
@@ -291,6 +297,12 @@ class Model(tornado.web.RequestHandler):
         }
 
         self.write(respond)
+        
+    
+    def get(self):
+        """Documentation."""
+
+        self.redirect("/")
 
 
 class WakeUp(tornado.web.RequestHandler):
