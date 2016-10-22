@@ -257,7 +257,7 @@ class Model(tornado.web.RequestHandler):
         received = json.loads(self.request.body.decode())
         width = np.array(received['width']).astype(float)
         length = np.array(received['length']).astype(float)
-        factor = np.array(received['factor']).astype(float)
+        factor = np.array(received['measuredFactor']).astype(float)
 
         width_valid = np.invert(np.isnan(width))
         width = width[width_valid]
