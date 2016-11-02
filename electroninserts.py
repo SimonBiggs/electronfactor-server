@@ -331,12 +331,12 @@ def visual_alignment_of_equivalent_ellipse(x, y, width, length, callback):
             translated.difference(insert).area +
             insert.difference(translated).area)
 
-        return disjoint_area
+        return disjoint_area / 400
 
     x0 = np.append(
         np.squeeze(insert.centroid.coords), np.pi/4)
     niter = 10
-    T = insert.area / 4
+    T = insert.area / 40000
     stepsize = 3
     niter_success = 2
     output = basinhopping(
